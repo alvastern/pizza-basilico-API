@@ -12,6 +12,7 @@ const openingHoursRoute = require("./routes/openingHoursRoute");
 const bookingRoute = require("./routes/bookingRoute");
 const pageRoute = require("./routes/pageRoute");
 const takeawayRoute = require("./routes/takeawayRoute");
+const authRoute = require("./routes/authRoute");
 
 // Middleware
 app.use(cors());
@@ -23,6 +24,7 @@ app.use("/opening-hours", openingHoursRoute);
 app.use("/table-bookings", bookingRoute);
 app.use("/information", pageRoute);
 app.use("/takeaway", takeawayRoute);
+app.use("/auth", authRoute);
 
 // Bestämmer vilken router som ska användas för olika endpoints
 app.listen(port, () => {

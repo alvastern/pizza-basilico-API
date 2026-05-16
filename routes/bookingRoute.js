@@ -18,4 +18,21 @@ router.get("/", (req, res)=> {
     })
 });
 
+router.post("/", (req, res) => {
+    const {name, email, phone_number, guest_number, booking_date, booking_time} = req.body;
+    const sql = `INSERT INTO table_bookings (name, email, phone_number, guest_number, booking_date, booking_time) VALUES (?, ?, ?, ?, ?, ?)`;
+
+    db.query(
+        sql, [name, email, phone_number, guest_number, booking_date, booking_time],
+        (err) => {
+            if(err) {
+                return res.status(500).json(err);
+            }
+            res.json({
+                message: "Bokning skapad"
+            });
+        }
+    );
+});
+
 module.exports = router;

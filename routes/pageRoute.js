@@ -3,6 +3,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models/db");
+const auth = require("../middleware/authMiddleware");
 
 // Endpoint för att hämta infomration om resturangen/företaget
 router.get("/", (req, res) => {
@@ -16,6 +17,23 @@ router.get("/", (req, res) => {
             res.json(results);
         }
     })
+});
+
+router.put("/:id", auth, (req, res) => {
+    const { content } = req.body;
+    const sql = `UPDATE pages SET content=? WHERE page_id=?`;
+
+    db.query(
+        sql, [content, req.params.id],
+        (err) => {
+            if(err) {
+                return res.status(500).json(err);
+            }
+            res.json({
+                message: "Sida uppdaterad"
+            });
+        }
+    );
 });
 
 module.exports = router;

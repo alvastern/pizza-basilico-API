@@ -3,6 +3,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models/db");
+const auth = require("../middleware/authMiddleware");
 
 // Endpoint för att hämta öppentider
 router.get("/", (req, res) => {
@@ -16,6 +17,23 @@ router.get("/", (req, res) => {
             res.json(results);
         }
     })
+});
+
+router.put("/:id", auth, (req, res) => {
+    const {weekday, open_time, close_time, is_closed} = req.body;
+    const sql = `UPDATE opening_hours SET weekday=?, open_time=?, close_time=?, is_closed=? WHERE hours_id=?`;
+
+    db.query(
+        sql, [weekday, open_time, close_time, is_closed, req.params.id],
+        (err) => {
+            if(err) {
+                return res.status(500).json(err);
+            }
+            res.json({
+                message: "Öppettider uppdaterade"
+            });
+        }
+    );
 });
 
 module.exports = router;

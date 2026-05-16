@@ -18,4 +18,21 @@ router.get("/", (req, res) => {
     })
 });
 
+router.post("/", (req, res) => {
+    const {name, email, phone_number, pickup_time, total_price} = req.body;
+    const sql = `INSERT INTO takeaway_orders (name, email, phone_number, pickup_time, total_price) VALUES (?, ?, ?, ?, ?)`;
+
+    db.query(
+        sql, [name, email, phone_number, pickup_time, total_price],
+        (err) => {
+            if(err) {
+                return res.status(500).json(err);
+            }
+            res.json({
+                message: "Order skapad"
+            });
+        }
+    );
+});
+
 module.exports = router;
