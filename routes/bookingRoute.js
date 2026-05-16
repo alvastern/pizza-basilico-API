@@ -6,7 +6,7 @@ const db = require("../models/db");
 
 // Endpoint för att hämta bordsbokningar
 router.get("/", (req, res)=> {
-    const sql = "SELECT * FROM bookings";
+    const sql = "SELECT * FROM table_bookings";
 
     db.query(sql, (err, results) => {
         if (err) {

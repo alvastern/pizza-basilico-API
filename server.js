@@ -6,17 +6,23 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
 const db = require("./models/db");
+
 const menuRoutes = require("./routes/menuRoute");
 const openingHoursRoute = require("./routes/openingHoursRoute");
 const bookingRoute = require("./routes/bookingRoute");
+const pageRoute = require("./routes/pageRoute");
+const takeawayRoute = require("./routes/takeawayRoute");
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
+
 app.use("/menu", menuRoutes);
 app.use("/opening-hours", openingHoursRoute);
-app.use("/bookings", bookingRoute);
+app.use("/table-bookings", bookingRoute);
+app.use("/information", pageRoute);
+app.use("/takeaway", takeawayRoute);
 
 // Bestämmer vilken router som ska användas för olika endpoints
 app.listen(port, () => {
