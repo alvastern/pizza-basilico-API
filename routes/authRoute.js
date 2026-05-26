@@ -10,10 +10,10 @@ const jwt = require("jsonwebtoken");
 
 // Använder post för att registrera en ny användare
 router.post("/register", async (req, res) => {
-    const { username, email, password } = req.body;
+    const { email, password } = req.body;
 
     // Validering av tomma fält
-    if(!username || !email || !password) {
+    if(!email || !password) {
         return res.status(400).json({
             message: "Alla fält måste fyllas i"
         });
@@ -62,12 +62,12 @@ router.post("/register", async (req, res) => {
 
                 const sql = `
                     INSERT INTO users
-                    (username, email, password)
-                    VALUES (?, ?, ?)
+                    (email, password)
+                    VALUES (?, ?)
                 `;
 
                 db.query(
-                    sql, [username, email, hashedPassword],
+                    sql, [email, hashedPassword],
 
                     (err) => {
                         if(err) {
@@ -115,7 +115,7 @@ router.post("/login", (req, res) => {
             if(results.length === 0) {
                 return res.status(401).json({
                     message:
-                    "Fel användare"
+                    "Fel e-postadress eller lösenord"
                 });
             }
 
@@ -132,10 +132,9 @@ router.post("/login", (req, res) => {
             if(!match) {
                 return res.status(401).json({
                     message:
-                    "Fel lösenord"
+                    "Fel e-postadress eller lösenord"
                 });
             }
-
 
             // Skapaer en JWT-token som är giltig i 1 timme
             const token = jwt.sign(
