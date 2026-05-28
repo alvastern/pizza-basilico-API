@@ -31,8 +31,7 @@ router.post("/register", async (req, res) => {
     // Validering av lösenord
     if(password.length < 6) {
         return res.status(400).json({
-            message:
-            "Lösenordet måste vara minst 6 tecken"
+            message: "Lösenordet måste vara minst 6 tecken"
         });
     }
 
@@ -50,8 +49,7 @@ router.post("/register", async (req, res) => {
 
             if(results.length > 0) {
                 return res.status(409).json({
-                    message:
-                    "E-postadressen används redan"
+                    message: "E-postadressen används redan"
                 });
             }
 
@@ -77,8 +75,7 @@ router.post("/register", async (req, res) => {
                         }
 
                         res.status(201).json({
-                            message:
-                            "Användare skapad"
+                            message: "Användare skapad"
                         });
                     }
                 );
@@ -114,8 +111,7 @@ router.post("/login", (req, res) => {
             // Kontrollerar om användaren finns i databasen
             if(results.length === 0) {
                 return res.status(401).json({
-                    message:
-                    "Fel e-postadress eller lösenord"
+                    message: "Fel e-postadress eller lösenord"
                 });
             }
 
@@ -131,18 +127,15 @@ router.post("/login", (req, res) => {
             // Om lösenordet inte matchar returneras ett felmeddelande
             if(!match) {
                 return res.status(401).json({
-                    message:
-                    "Fel e-postadress eller lösenord"
+                    message: "Fel e-postadress eller lösenord"
                 });
             }
 
             // Skapaer en JWT-token som är giltig i 1 timme
             const token = jwt.sign(
-                { id: user.user_id, role: user.role },
-
+                { id: user.user_id },
                 process.env.JWT_SECRET,
-
-                { expiresIn: "1h"}
+                { expiresIn: "1h" }
             );
 
             res.json({
