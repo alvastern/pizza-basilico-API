@@ -36,4 +36,44 @@ router.put("/:id", auth, (req, res) => {
     );
 });
 
+router.get("/about", (req, res) => {
+
+    const sql = `
+        SELECT content
+        FROM pages
+        WHERE slug = 'about'
+    `;
+
+    db.query(sql, (err, result) => {
+
+        if(err) {
+            return res.status(500).json(err);
+        }
+
+        res.json(result[0]);
+
+    });
+
+});
+
+router.get("/homepage", (req, res) => {
+
+    const sql = `
+        SELECT *
+        FROM pages
+        WHERE slug = 'homepage'
+    `;
+
+    db.query(sql, (err, result) => {
+
+        if(err) {
+            return res.status(500).json(err);
+        }
+
+        res.json(result[0]);
+
+    });
+
+});
+
 module.exports = router;

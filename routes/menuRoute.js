@@ -74,4 +74,94 @@ router.delete("/:id", auth, (req, res) => {
     });
 });
 
+router.put("/:id", (req, res) => {
+
+    const pizzaId = req.params.id;
+
+    const {
+        title,
+        description,
+        price,
+        image
+    } = req.body;
+
+    const sql = `
+        UPDATE menu_items
+        SET
+            title = ?,
+            description = ?,
+            price = ?,
+            image = ?
+        WHERE item_id = ?
+    `;
+
+    db.query(
+        sql,
+        [
+            title,
+            description,
+            price,
+            image,
+            pizzaId
+        ],
+
+        (err) => {
+
+            if(err) {
+                return res.status(500).json(err);
+            }
+
+            res.json({
+                message: "Pizza uppdaterad"
+            });
+
+        }
+    );
+
+});
+
+router.post("/", (req, res) => {
+
+    const {
+        title,
+        description,
+        price,
+        image
+    } = req.body;
+
+    const sql = `
+        INSERT INTO menu_items
+        (
+            title,
+            description,
+            price,
+            image
+        )
+        VALUES (?, ?, ?, ?)
+    `;
+
+    db.query(
+        sql,
+        [
+            title,
+            description,
+            price,
+            image
+        ],
+
+        (err) => {
+
+            if(err) {
+                return res.status(500).json(err);
+            }
+
+            res.json({
+                message: "Pizza skapad"
+            });
+
+        }
+    );
+
+});
+
 module.exports = router;

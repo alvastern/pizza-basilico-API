@@ -22,7 +22,7 @@ app.use(express.static("public"));
 app.use("/menu", menuRoutes);
 app.use("/opening-hours", openingHoursRoute);
 app.use("/table-bookings", bookingRoute);
-app.use("/information", pageRoute);
+app.use("/pages", pageRoute);
 app.use("/takeaway", takeawayRoute);
 app.use("/auth", authRoute);
 

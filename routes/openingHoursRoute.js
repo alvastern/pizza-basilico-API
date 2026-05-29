@@ -36,4 +36,23 @@ router.put("/:id", auth, (req, res) => {
     );
 });
 
+router.get("/", (req, res) => {
+
+    const sql = `
+        SELECT *
+        FROM opening_hours
+    `;
+
+    db.query(sql, (err, result) => {
+
+        if(err) {
+            return res.status(500).json(err);
+        }
+
+        res.json(result);
+
+    });
+
+});
+
 module.exports = router;
