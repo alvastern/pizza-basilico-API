@@ -19,6 +19,7 @@ router.get("/", (req, res) => {
     })
 });
 
+// Skyddad route för att uppdatera information från databasen
 router.put("/:id", auth, (req, res) => {
     const { content } = req.body;
     const sql = `UPDATE pages SET content=? WHERE page_id=?`;
@@ -36,44 +37,30 @@ router.put("/:id", auth, (req, res) => {
     );
 });
 
+// Endpoint för att hämta information om företaget
 router.get("/about", (req, res) => {
-
-    const sql = `
-        SELECT content
-        FROM pages
-        WHERE slug = 'about'
-    `;
+    const sql = `SELECT content FROM pages WHERE slug = 'about'`;
 
     db.query(sql, (err, result) => {
-
         if(err) {
             return res.status(500).json(err);
         }
 
         res.json(result[0]);
-
     });
-
 });
 
+// Endpoint för att hämta information om företaget - introduktionstext
 router.get("/homepage", (req, res) => {
-
-    const sql = `
-        SELECT *
-        FROM pages
-        WHERE slug = 'homepage'
-    `;
+    const sql = `SELECT * FROM pages WHERE slug = 'homepage'`;
 
     db.query(sql, (err, result) => {
-
         if(err) {
             return res.status(500).json(err);
         }
 
         res.json(result[0]);
-
     });
-
 });
 
 module.exports = router;

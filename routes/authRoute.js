@@ -39,8 +39,7 @@ router.post("/register", async (req, res) => {
     const checkUserSql = "SELECT * FROM users WHERE email = ?";
 
     db.query(
-        checkUserSql,
-        [email],
+        checkUserSql, [email],
 
         async (err, results) => {
             if(err) {
@@ -116,13 +115,7 @@ router.post("/login", (req, res) => {
             }
 
             const user = results[0];
-
-            const match =
-                await bcrypt.compare(
-                    password,
-                    user.password
-                );
-
+            const match = await bcrypt.compare(password, user.password);
 
             // Om lösenordet inte matchar returneras ett felmeddelande
             if(!match) {

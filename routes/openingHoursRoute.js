@@ -19,6 +19,7 @@ router.get("/", (req, res) => {
     })
 });
 
+// Skyddad route för att uppdatera öppettider
 router.put("/:id", auth, (req, res) => {
     const {weekday, open_time, close_time, is_closed} = req.body;
     const sql = `UPDATE opening_hours SET weekday=?, open_time=?, close_time=?, is_closed=? WHERE hours_id=?`;
@@ -36,23 +37,17 @@ router.put("/:id", auth, (req, res) => {
     );
 });
 
+// Endpoint för att hämta öppettider
 router.get("/", (req, res) => {
-
-    const sql = `
-        SELECT *
-        FROM opening_hours
-    `;
+    const sql = `SELECT * FROM opening_hours`;
 
     db.query(sql, (err, result) => {
-
         if(err) {
             return res.status(500).json(err);
         }
 
         res.json(result);
-
     });
-
 });
 
 module.exports = router;

@@ -39,7 +39,7 @@ router.post("/", auth, (req, res) => {
     );
 });
 
-// Update för att uppdatera menyn
+// Update routeför att uppdatera menyn
 router.put("/:id", auth, (req, res) => {
     const { title, description, price, image } = req.body;
     const sql = `UPDATE menu_items SET title=?, description=?, price=?, image=? WHERE item_id=?`;
@@ -60,7 +60,7 @@ router.put("/:id", auth, (req, res) => {
     );
 });
 
-// Delete för att ta bort ett item från menyn
+// Delete routeför att ta bort ett item från menyn
 router.delete("/:id", auth, (req, res) => {
     const sql = `DELETE FROM menu_items WHERE item_id=?`;
 
@@ -74,39 +74,14 @@ router.delete("/:id", auth, (req, res) => {
     });
 });
 
+// Update route för att uppdatera menyn
 router.put("/:id", (req, res) => {
-
     const pizzaId = req.params.id;
-
-    const {
-        title,
-        description,
-        price,
-        image
-    } = req.body;
-
-    const sql = `
-        UPDATE menu_items
-        SET
-            title = ?,
-            description = ?,
-            price = ?,
-            image = ?
-        WHERE item_id = ?
-    `;
+    const {title, description, price, image} = req.body;
+    const sql = `UPDATE menu_items SET title = ?, description = ?, price = ?, image = ? WHERE item_id = ?`;
 
     db.query(
-        sql,
-        [
-            title,
-            description,
-            price,
-            image,
-            pizzaId
-        ],
-
-        (err) => {
-
+        sql, [title, description, price, image, pizzaId], (err) => {
             if(err) {
                 return res.status(500).json(err);
             }
@@ -114,43 +89,17 @@ router.put("/:id", (req, res) => {
             res.json({
                 message: "Pizza uppdaterad"
             });
-
         }
     );
-
 });
 
+// Post route för att lägga till en pizza i menyn
 router.post("/", (req, res) => {
-
-    const {
-        title,
-        description,
-        price,
-        image
-    } = req.body;
-
-    const sql = `
-        INSERT INTO menu_items
-        (
-            title,
-            description,
-            price,
-            image
-        )
-        VALUES (?, ?, ?, ?)
-    `;
+    const {title, description, price, image} = req.body;
+    const sql = `INSERT INTO menu_items (title, description, price, image) VALUES (?, ?, ?, ?)`;
 
     db.query(
-        sql,
-        [
-            title,
-            description,
-            price,
-            image
-        ],
-
-        (err) => {
-
+        sql, [title, description, price, image], (err) => {
             if(err) {
                 return res.status(500).json(err);
             }
@@ -158,10 +107,8 @@ router.post("/", (req, res) => {
             res.json({
                 message: "Pizza skapad"
             });
-
         }
     );
-
 });
 
 module.exports = router;

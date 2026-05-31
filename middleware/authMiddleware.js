@@ -1,10 +1,13 @@
 "use strict";
 
+// Middleware för autentisering av användare
 const jwt = require("jsonwebtoken");
 
+// Funktion för att kontrollera en användare genom att verifiera en JWT-token
 function auth(req, res, next) {
     const authHeader = req.headers.authorization;
 
+    // Om ingen tokens finns i headern
     if(!authHeader) {
         return res.status(401).json({
             message: "Ingen token"
@@ -13,6 +16,7 @@ function auth(req, res, next) {
 
     const token = authHeader.split(" ")[1];
 
+    // Try/catch för att verifiera token och hantera fel
     try {
         console.log("TOKEN:", token);
         console.log("SECRET:", process.env.JWT_SECRET);
