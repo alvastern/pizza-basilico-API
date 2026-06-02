@@ -7,12 +7,12 @@ och stödjer en relationsdatabas som är framtagen med MySQL.
 Projektet använder en relationsdatabas byggd i MySQL för att lagra och hantera data. Databasen består av sammankopplade tabeller som stödjer systemets funktioner:
 
 users – lagrar användarkonton.
-menu_items – innehåller meny med pizzor, beskrivningar, priser och bilder.
-takeaway_orders – lagrar kunders takeaway-beställningar.
-takeaway_order_items – hanterar produkter som ingår i varje beställning.
-table_bookings – lagrar bordsbokningar.
-opening_hours – lagrar restaurangens öppettider.
-pages – lagra innehåll som kan.
+- menu_items – innehåller meny med pizzor, beskrivningar, priser och bilder.
+- takeaway_orders – lagrar kunders takeaway-beställningar.
+- takeaway_order_items – hanterar produkter som ingår i varje beställning.
+- table_bookings – lagrar bordsbokningar.
+- opening_hours – lagrar restaurangens öppettider.
+- pages – lagra innehåll som kan.
 
 Databasen använder primary och foreigen keys för att säkerställa dataintegritet. Relationerna mellan tabellerna gör det möjligt att koppla samman beställningar med produkter och hantera data på ett strukturerat sätt.
 
@@ -24,17 +24,6 @@ Databasen använder primary och foreigen keys för att säkerställa dataintegri
 | POST | /api/pizzas | Skapa en ny pizza |
 | PUT | /api/pizzas/:id | Uppdatera en pizza |
 | DELETE | /api/pizzas/:id | Ta bort en pizza |
-
-## Exempel på en POST-request i JSON
-{
-  "name": "Pizza Margherita",
-  "price": 109,
-  "toppings": [
-    "Mozzarella",
-    "Tomatsås",
-    "Basilika"
-  ]
-}
 
 ## Autentisering och säkerhet
 API:t använder JSON Web Tokens (JWT) för autentisering av användare i en administrations-sida. Efter inloggning får användaren en JWT-token som skickas med i efterföljande anrop till skyddade endpoints.
