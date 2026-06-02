@@ -18,8 +18,6 @@ function auth(req, res, next) {
 
     // Try/catch för att verifiera token och hantera fel
     try {
-        console.log("TOKEN:", token);
-        console.log("SECRET:", process.env.JWT_SECRET);
         const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET
